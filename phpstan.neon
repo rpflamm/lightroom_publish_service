@@ -9,3 +9,6 @@ parameters:
     phpVersion: 80200
     treatPhpDocTypesAsCertain: false
     reportUnmatchedIgnoredErrors: false
+    scanFiles:
+        - Build/phpstan-stubs/UpgradeWizardInterface.v13.stub
+        - Build/phpstan-stubs/UpgradeWizardInterface.v14.stub

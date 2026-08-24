@@ -39,9 +39,7 @@ final class TokenController extends ActionController
 
     public function newAction(): ResponseInterface
     {
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-
-        return $moduleTemplate->renderResponse('Backend/Token/New');
+        return $this->moduleTemplateFactory->create($this->request)->renderResponse('Backend/Token/New');
     }
 
     public function createAction(string $name): ResponseInterface
@@ -66,7 +64,7 @@ final class TokenController extends ActionController
         $this->getBackendUser()->setAndSaveSessionData(self::SESSION_KEY, null);
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->assign('plaintextToken', $plaintextToken ?: null);
+        $moduleTemplate->assign('plaintextToken', $plaintextToken !== null && $plaintextToken !== '' ? $plaintextToken : null);
 
         return $moduleTemplate->renderResponse('Backend/Token/Reveal');
     }

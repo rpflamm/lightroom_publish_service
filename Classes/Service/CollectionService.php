@@ -49,7 +49,7 @@ final class CollectionService
             throw new ValidationException(sprintf('"type" must be one of: %s.', implode(', ', self::VALID_TYPES)), 'invalid_type');
         }
 
-        $parent = isset($payload['parent']) && $payload['parent'] !== null ? (int) $payload['parent'] : null;
+        $parent = isset($payload['parent']) ? (int) $payload['parent'] : null;
         $this->assertValidParent($parent);
 
         if ($this->collectionRepository->nameExistsUnderParent($name, $parent)) {
@@ -107,7 +107,7 @@ final class CollectionService
 
         if ($data !== []) {
             $checkName = $data['name'] ?? $collection->name;
-            $checkParent = array_key_exists('parent', $data) ? ($data['parent'] ?: null) : $collection->parent;
+            $checkParent = array_key_exists('parent', $data) ? ($data['parent'] !== 0 ? $data['parent'] : null) : $collection->parent;
             if ($this->collectionRepository->nameExistsUnderParent($checkName, $checkParent, $uid)) {
                 throw new ConflictException('A collection with this name already exists under the given parent.', 'duplicate_name');
             }

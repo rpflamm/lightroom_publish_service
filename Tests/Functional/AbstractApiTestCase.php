@@ -44,9 +44,6 @@ abstract class AbstractApiTestCase extends FunctionalTestCase
             ->withBody($stream);
     }
 
-    /**
-     * @param array<string, mixed> $metadata
-     */
     protected function uploadedFixtureFile(): UploadedFile
     {
         $tmpPath = tempnam(sys_get_temp_dir(), 'lrps-test-');
@@ -67,6 +64,8 @@ abstract class AbstractApiTestCase extends FunctionalTestCase
 
     /**
      * @param array<string, mixed> $metadata
+     *
+     * @return array<string, mixed>
      */
     protected function uploadPhoto(string $collectionId, array $metadata = ['title' => 'Test Photo']): array
     {

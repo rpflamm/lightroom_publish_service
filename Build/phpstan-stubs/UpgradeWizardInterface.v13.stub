@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * PHPStan-only stub. TYPO3 v13's TYPO3\CMS\Install\Updates\UpgradeWizardInterface was removed
+ * without a compatible alias in v14, so composer only ever installs one of the two version-specific
+ * interfaces at a time. This stub lets PHPStan resolve the symbol regardless of which major version
+ * is actually installed locally; it is never loaded at runtime (see phpstan.neon "stubFiles").
+ */
+
+namespace TYPO3\CMS\Install\Updates;
+
+interface UpgradeWizardInterface
+{
+    public function getTitle(): string;
+
+    public function getDescription(): string;
+
+    public function executeUpdate(): bool;
+
+    public function updateNecessary(): bool;
+
+    /**
+     * @return string[]
+     */
+    public function getPrerequisites(): array;
+}

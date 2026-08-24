@@ -36,24 +36,26 @@ final class FileUploadService
         $tmpPath = $this->moveToTemporaryFile($uploadedFile);
         $targetFileName = $photoUid . '_' . $this->sanitizeOriginalFileName($uploadedFile);
 
-        $storage = $folder->getStorage();
-
-        return $storage->addFile($tmpPath, $folder, $targetFileName, DuplicationBehavior::REPLACE);
+        return $folder->getStorage()->addFile($tmpPath, $folder, $targetFileName, DuplicationBehavior::REPLACE);
     }
 
     public function replaceFile(File $file, UploadedFileInterface $uploadedFile): File
     {
         $tmpPath = $this->moveToTemporaryFile($uploadedFile);
         $storage = $file->getStorage();
+        // ResourceStorage::replaceFile() always returns the same $file instance it was given,
+        // just mutated in place -- its FileInterface return type is wider than what it actually returns here.
+        $storage->replaceFile($file, $tmpPath);
 
-        return $storage->replaceFile($file, $tmpPath);
+        return $file;
     }
 
     public function hashFile(File $file): string
     {
         $tmpPath = $file->getForLocalProcessing(false);
+        $hash = hash_file('sha256', $tmpPath);
 
-        return hash_file('sha256', $tmpPath) ?: '';
+        return $hash !== false ? $hash : '';
     }
 
     public function linkFileToPhoto(int $photoUid, File $file, int $pid = 0): void
