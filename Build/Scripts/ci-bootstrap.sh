@@ -54,6 +54,11 @@ cat > "${CI_ROOT}/composer.json" <<JSON
     "require-dev": {
         "typo3/testing-framework": "^9.1 || ^10.0"
     },
+    "autoload-dev": {
+        "psr-4": {
+            "RPflamm\\\\LightroomPublishService\\\\Tests\\\\": "packages/${EXT_KEY}/Tests/"
+        }
+    },
     "config": {
         "allow-plugins": {
             "typo3/class-alias-loader": true,
