@@ -67,6 +67,10 @@ vendor/bin/phpunit -c Build/FunctionalTests.xml
 - **No comments/ratings sync back from TYPO3** — the API is one-directional (Lightroom → TYPO3); TYPO3-side edits to photo metadata are not pulled back into Lightroom.
 - **No automated Lua tests** — the Lightroom Classic SDK has no test runner, so the plugin side (upload/update/delete, metadata sync, collection lifecycle) can only be verified manually in Lightroom itself, not via CI.
 
+## Development notes
+
+This project was developed with the assistance of AI coding agents; all generated code has been reviewed by a human before being committed.
+
 ## License
 
 GPL-2.0-or-later
