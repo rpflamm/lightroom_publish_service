@@ -16,7 +16,7 @@ final class PhotoUpdateTest extends AbstractApiTestCase
         $photo = $this->uploadPhoto($collectionId, ['title' => 'Before']);
 
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file');
-        $fileCountBefore = (int)$queryBuilder->count('uid')->from('sys_file')->executeQuery()->fetchOne();
+        $fileCountBefore = (int) $queryBuilder->count('uid')->from('sys_file')->executeQuery()->fetchOne();
 
         $request = $this->authenticated(self::API_BASE . '/photos/' . $photo['id'])
             ->withMethod('POST')
@@ -25,14 +25,14 @@ final class PhotoUpdateTest extends AbstractApiTestCase
             ->withParsedBody(['metadata' => json_encode(['title' => 'After'])]);
 
         $response = $this->executeFrontendSubRequest($request);
-        $data = json_decode((string)$response->getBody(), true)['data'];
+        $data = json_decode((string) $response->getBody(), true)['data'];
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('After', $data['title']);
         self::assertSame($photo['id'], $data['id']);
 
         // Replacing in place must not create a second sys_file row.
-        $fileCountAfter = (int)$queryBuilder->count('uid')->from('sys_file')->executeQuery()->fetchOne();
+        $fileCountAfter = (int) $queryBuilder->count('uid')->from('sys_file')->executeQuery()->fetchOne();
         self::assertSame($fileCountBefore, $fileCountAfter);
     }
 
@@ -45,7 +45,7 @@ final class PhotoUpdateTest extends AbstractApiTestCase
         $response = $this->executeFrontendSubRequest(
             $this->jsonRequest('PATCH', self::API_BASE . '/photos/' . $photo['id'], ['title' => 'Updated Title']),
         );
-        $data = json_decode((string)$response->getBody(), true)['data'];
+        $data = json_decode((string) $response->getBody(), true)['data'];
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('Updated Title', $data['title']);

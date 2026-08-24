@@ -71,7 +71,7 @@ final class CollectionRepository
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_lightroompublishservice_domain_model_photo');
 
-        return (int)$queryBuilder
+        return (int) $queryBuilder
             ->count('uid')
             ->from('tx_lightroompublishservice_domain_model_photo')
             ->where($queryBuilder->expr()->eq('collection', $queryBuilder->createNamedParameter($collectionUid, ParameterType::INTEGER)))
@@ -96,7 +96,7 @@ final class CollectionRepository
             );
         }
 
-        return (int)$queryBuilder->executeQuery()->fetchOne() > 0;
+        return (int) $queryBuilder->executeQuery()->fetchOne() > 0;
     }
 
     /**
@@ -112,7 +112,7 @@ final class CollectionRepository
             'crdate' => $now,
         ]));
 
-        return (int)$connection->lastInsertId();
+        return (int) $connection->lastInsertId();
     }
 
     /**

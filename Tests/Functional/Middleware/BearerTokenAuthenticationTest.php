@@ -24,7 +24,7 @@ final class BearerTokenAuthenticationTest extends FunctionalTestCase
         );
 
         self::assertSame(200, $response->getStatusCode());
-        $body = json_decode((string)$response->getBody(), true);
+        $body = json_decode((string) $response->getBody(), true);
         self::assertTrue($body['success']);
         self::assertSame('functional-test', $body['data']['tokenName']);
     }
@@ -37,7 +37,7 @@ final class BearerTokenAuthenticationTest extends FunctionalTestCase
         );
 
         self::assertSame(401, $response->getStatusCode());
-        $body = json_decode((string)$response->getBody(), true);
+        $body = json_decode((string) $response->getBody(), true);
         self::assertFalse($body['success']);
         self::assertSame('invalid_token', $body['error']['code']);
     }
@@ -100,7 +100,7 @@ final class BearerTokenAuthenticationTest extends FunctionalTestCase
 
             if ($response->getStatusCode() === 429) {
                 $sawRateLimited = true;
-                $body = json_decode((string)$response->getBody(), true);
+                $body = json_decode((string) $response->getBody(), true);
                 self::assertSame('rate_limited', $body['error']['code']);
                 self::assertTrue($response->hasHeader('Retry-After'));
                 break;

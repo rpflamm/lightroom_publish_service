@@ -23,7 +23,7 @@ final class StorageProvisioningServiceTest extends FunctionalTestCase
         self::assertSame($storage1->getUid(), $storage2->getUid());
 
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file_storage');
-        $count = (int)$queryBuilder->count('uid')->from('sys_file_storage')
+        $count = (int) $queryBuilder->count('uid')->from('sys_file_storage')
             ->where($queryBuilder->expr()->eq('name', $queryBuilder->createNamedParameter('Lightroom Publish Service')))
             ->executeQuery()->fetchOne();
 

@@ -29,7 +29,7 @@ final class StorageProvisioningService
 
     public function getOrCreateStorage(): ResourceStorage
     {
-        $storageUid = (int)($this->extensionConfiguration->get('lightroom_publish_service', 'storageUid') ?? 0);
+        $storageUid = (int) ($this->extensionConfiguration->get('lightroom_publish_service', 'storageUid') ?? 0);
 
         if ($storageUid > 0) {
             $storage = $this->storageRepository->findByUid($storageUid);
@@ -71,7 +71,7 @@ final class StorageProvisioningService
             ? $storage->getFolder('/collections/')
             : $storage->createFolder('collections');
 
-        return $storage->createFolder((string)$collectionUid, $rootFolder);
+        return $storage->createFolder((string) $collectionUid, $rootFolder);
     }
 
     private function findExistingStorageUidByName(): ?int
@@ -84,11 +84,11 @@ final class StorageProvisioningService
             ->executeQuery()
             ->fetchOne();
 
-        return $uid !== false ? (int)$uid : null;
+        return $uid !== false ? (int) $uid : null;
     }
 
     private function rememberStorageUid(int $uid): void
     {
-        $this->extensionConfiguration->set('lightroom_publish_service/storageUid', (string)$uid);
+        $this->extensionConfiguration->set('lightroom_publish_service/storageUid', (string) $uid);
     }
 }

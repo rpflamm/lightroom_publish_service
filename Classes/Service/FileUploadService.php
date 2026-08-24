@@ -96,7 +96,7 @@ final class FileUploadService
             ->fetchAllAssociative();
 
         foreach ($references as $reference) {
-            $file = $this->getFileForPhoto((int)$reference['uid_local']);
+            $file = $this->getFileForPhoto((int) $reference['uid_local']);
             if ($file !== null) {
                 $file->getStorage()->deleteFile($file);
             }

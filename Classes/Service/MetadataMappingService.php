@@ -27,6 +27,7 @@ final class MetadataMappingService
      * apply this directly for a PATCH without clobbering untouched columns.
      *
      * @param array<string, mixed> $metadata
+     *
      * @throws ValidationException
      */
     public function applyToFile(int $fileUid, array $metadata): void
@@ -57,18 +58,20 @@ final class MetadataMappingService
      * validate a payload before an upload has produced a file uid to write to.
      *
      * @param array<string, mixed> $metadata
-     * @return array<string, mixed>
+     *
      * @throws ValidationException
+     *
+     * @return array<string, mixed>
      */
     public function toMetadataRow(array $metadata): array
     {
         $row = [];
 
         if (array_key_exists('title', $metadata)) {
-            $row['title'] = (string)$metadata['title'];
+            $row['title'] = (string) $metadata['title'];
         }
         if (array_key_exists('caption', $metadata)) {
-            $row['caption'] = (string)$metadata['caption'];
+            $row['caption'] = (string) $metadata['caption'];
         }
         if (array_key_exists('keywords', $metadata)) {
             if (!is_array($metadata['keywords'])) {
@@ -82,22 +85,22 @@ final class MetadataMappingService
                 $row['latitude'] = 0.0;
                 $row['longitude'] = 0.0;
             } elseif (is_array($gps) && isset($gps['latitude'], $gps['longitude'])) {
-                $row['latitude'] = $this->validateRange((float)$gps['latitude'], -90, 90, 'gps.latitude');
-                $row['longitude'] = $this->validateRange((float)$gps['longitude'], -180, 180, 'gps.longitude');
+                $row['latitude'] = $this->validateRange((float) $gps['latitude'], -90, 90, 'gps.latitude');
+                $row['longitude'] = $this->validateRange((float) $gps['longitude'], -180, 180, 'gps.longitude');
             } else {
                 throw new ValidationException('"gps" must be null or an object with "latitude" and "longitude".', 'invalid_gps');
             }
         }
         if (array_key_exists('gpsAltitude', $metadata)) {
-            $row['tx_lightroompublishservice_gps_altitude'] = $metadata['gpsAltitude'] !== null ? (float)$metadata['gpsAltitude'] : null;
+            $row['tx_lightroompublishservice_gps_altitude'] = $metadata['gpsAltitude'] !== null ? (float) $metadata['gpsAltitude'] : null;
         }
         if (array_key_exists('rating', $metadata)) {
             $row['ranking'] = $metadata['rating'] !== null
-                ? (int)$this->validateRange((float)$metadata['rating'], 0, 5, 'rating')
+                ? (int) $this->validateRange((float) $metadata['rating'], 0, 5, 'rating')
                 : 0;
         }
         if (array_key_exists('colorLabel', $metadata)) {
-            $colorLabel = (string)($metadata['colorLabel'] ?? '');
+            $colorLabel = (string) ($metadata['colorLabel'] ?? '');
             if (!in_array($colorLabel, self::VALID_COLOR_LABELS, true)) {
                 throw new ValidationException(
                     sprintf('"colorLabel" must be one of: %s.', implode(', ', self::VALID_COLOR_LABELS)),
@@ -107,10 +110,10 @@ final class MetadataMappingService
             $row['tx_lightroompublishservice_color_label'] = $colorLabel;
         }
         if (array_key_exists('creator', $metadata)) {
-            $row['creator'] = (string)$metadata['creator'];
+            $row['creator'] = (string) $metadata['creator'];
         }
         if (array_key_exists('copyright', $metadata)) {
-            $row['copyright'] = (string)$metadata['copyright'];
+            $row['copyright'] = (string) $metadata['copyright'];
         }
         if (array_key_exists('dateCreated', $metadata)) {
             $row['content_creation_date'] = $this->parseDate($metadata['dateCreated']) ?? 0;
@@ -126,29 +129,29 @@ final class MetadataMappingService
     {
         $metadata = $photo->fileUid !== null ? $this->metaDataRepository->findByFileUid($photo->fileUid) : [];
 
-        $latitude = (float)($metadata['latitude'] ?? 0.0);
-        $longitude = (float)($metadata['longitude'] ?? 0.0);
+        $latitude = (float) ($metadata['latitude'] ?? 0.0);
+        $longitude = (float) ($metadata['longitude'] ?? 0.0);
         $gpsAltitude = $metadata['tx_lightroompublishservice_gps_altitude'] ?? null;
-        $colorLabel = (string)($metadata['tx_lightroompublishservice_color_label'] ?? '');
-        $keywords = trim((string)($metadata['keywords'] ?? ''));
-        $contentCreationDate = (int)($metadata['content_creation_date'] ?? 0);
+        $colorLabel = (string) ($metadata['tx_lightroompublishservice_color_label'] ?? '');
+        $keywords = trim((string) ($metadata['keywords'] ?? ''));
+        $contentCreationDate = (int) ($metadata['content_creation_date'] ?? 0);
 
         return [
-            'id' => (string)$photo->uid,
-            'collection' => (string)$photo->collection,
+            'id' => (string) $photo->uid,
+            'collection' => (string) $photo->collection,
             'url' => $publicUrl,
-            'metadataUid' => isset($metadata['uid']) ? (int)$metadata['uid'] : null,
-            'title' => (string)($metadata['title'] ?? ''),
-            'caption' => (string)($metadata['caption'] ?? ''),
+            'metadataUid' => isset($metadata['uid']) ? (int) $metadata['uid'] : null,
+            'title' => (string) ($metadata['title'] ?? ''),
+            'caption' => (string) ($metadata['caption'] ?? ''),
             'keywords' => $keywords !== '' ? array_map('trim', explode(',', $keywords)) : [],
             'gps' => $latitude !== 0.0 || $longitude !== 0.0
                 ? ['latitude' => $latitude, 'longitude' => $longitude]
                 : null,
-            'gpsAltitude' => $gpsAltitude !== null ? (float)$gpsAltitude : null,
-            'rating' => (int)($metadata['ranking'] ?? 0),
+            'gpsAltitude' => $gpsAltitude !== null ? (float) $gpsAltitude : null,
+            'rating' => (int) ($metadata['ranking'] ?? 0),
             'colorLabel' => $colorLabel !== '' ? $colorLabel : null,
-            'creator' => (string)($metadata['creator'] ?? ''),
-            'copyright' => (string)($metadata['copyright'] ?? ''),
+            'creator' => (string) ($metadata['creator'] ?? ''),
+            'copyright' => (string) ($metadata['copyright'] ?? ''),
             'dateCreated' => $contentCreationDate !== 0
                 ? (new \DateTimeImmutable('@' . $contentCreationDate))->format(\DateTimeInterface::ATOM)
                 : null,
@@ -172,7 +175,7 @@ final class MetadataMappingService
         }
 
         try {
-            return (new \DateTimeImmutable((string)$value))->getTimestamp();
+            return (new \DateTimeImmutable((string) $value))->getTimestamp();
         } catch (\Exception) {
             throw new ValidationException('"dateCreated" must be a valid ISO-8601 date string.', 'invalid_date');
         }

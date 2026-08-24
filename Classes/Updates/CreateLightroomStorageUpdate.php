@@ -34,7 +34,7 @@ final class CreateLightroomStorageUpdate implements UpgradeWizardInterface
 
     public function updateNecessary(): bool
     {
-        $configuredUid = (int)($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['lightroom_publish_service']['storageUid'] ?? 0);
+        $configuredUid = (int) ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['lightroom_publish_service']['storageUid'] ?? 0);
 
         return $configuredUid <= 0;
     }

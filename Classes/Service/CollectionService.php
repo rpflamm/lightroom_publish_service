@@ -27,28 +27,29 @@ final class CollectionService
     public function listAll(): array
     {
         return array_map(
-            fn (Collection $collection) => $this->toApiArray($collection),
+            fn(Collection $collection) => $this->toApiArray($collection),
             $this->collectionRepository->findAll(),
         );
     }
 
     /**
      * @param array<string, mixed> $payload
+     *
      * @return array<string, mixed>
      */
     public function create(array $payload): array
     {
-        $name = trim((string)($payload['name'] ?? ''));
+        $name = trim((string) ($payload['name'] ?? ''));
         if ($name === '') {
             throw new ValidationException('"name" is required.', 'name_required');
         }
 
-        $type = (string)($payload['type'] ?? 'collection');
+        $type = (string) ($payload['type'] ?? 'collection');
         if (!in_array($type, self::VALID_TYPES, true)) {
             throw new ValidationException(sprintf('"type" must be one of: %s.', implode(', ', self::VALID_TYPES)), 'invalid_type');
         }
 
-        $parent = isset($payload['parent']) && $payload['parent'] !== null ? (int)$payload['parent'] : null;
+        $parent = isset($payload['parent']) && $payload['parent'] !== null ? (int) $payload['parent'] : null;
         $this->assertValidParent($parent);
 
         if ($this->collectionRepository->nameExistsUnderParent($name, $parent)) {
@@ -59,7 +60,7 @@ final class CollectionService
             'name' => $name,
             'collection_type' => $type,
             'parent' => $parent ?? 0,
-            'description' => (string)($payload['description'] ?? ''),
+            'description' => (string) ($payload['description'] ?? ''),
         ]);
 
         return $this->toApiArray($this->getOrFail($uid));
@@ -75,6 +76,7 @@ final class CollectionService
 
     /**
      * @param array<string, mixed> $payload
+     *
      * @return array<string, mixed>
      */
     public function update(int $uid, array $payload): array
@@ -83,7 +85,7 @@ final class CollectionService
         $data = [];
 
         if (array_key_exists('name', $payload)) {
-            $name = trim((string)$payload['name']);
+            $name = trim((string) $payload['name']);
             if ($name === '') {
                 throw new ValidationException('"name" must not be empty.', 'name_required');
             }
@@ -91,7 +93,7 @@ final class CollectionService
         }
 
         if (array_key_exists('parent', $payload)) {
-            $parent = $payload['parent'] !== null ? (int)$payload['parent'] : null;
+            $parent = $payload['parent'] !== null ? (int) $payload['parent'] : null;
             if ($parent === $uid) {
                 throw new ValidationException('A collection cannot be its own parent.', 'invalid_parent');
             }
@@ -100,7 +102,7 @@ final class CollectionService
         }
 
         if (array_key_exists('description', $payload)) {
-            $data['description'] = (string)$payload['description'];
+            $data['description'] = (string) $payload['description'];
         }
 
         if ($data !== []) {
@@ -183,10 +185,10 @@ final class CollectionService
     private function toApiArray(Collection $collection): array
     {
         return [
-            'id' => (string)$collection->uid,
+            'id' => (string) $collection->uid,
             'name' => $collection->name,
             'type' => $collection->collectionType,
-            'parent' => $collection->parent !== null ? (string)$collection->parent : null,
+            'parent' => $collection->parent !== null ? (string) $collection->parent : null,
             'description' => $collection->description,
             'photoCount' => $this->collectionRepository->countPhotos($collection->uid),
         ];

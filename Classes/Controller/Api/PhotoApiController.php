@@ -43,8 +43,8 @@ final class PhotoApiController
     public function listUpdated(ServerRequestInterface $request): ResponseInterface
     {
         $query = $request->getQueryParams();
-        $timestamp = $this->parseTimestamp((string)($query['updatedSince'] ?? ''));
-        $collectionUid = isset($query['collection']) && $query['collection'] !== '' ? (int)$query['collection'] : null;
+        $timestamp = $this->parseTimestamp((string) ($query['updatedSince'] ?? ''));
+        $collectionUid = isset($query['collection']) && $query['collection'] !== '' ? (int) $query['collection'] : null;
 
         return ApiResponseFactory::success($this->photoService->listUpdatedSince($timestamp, $collectionUid));
     }
@@ -81,7 +81,7 @@ final class PhotoApiController
             return 0;
         }
         if (ctype_digit($value)) {
-            return (int)$value;
+            return (int) $value;
         }
 
         try {

@@ -78,7 +78,7 @@ class ApiTokenRepository
             'revoked' => 0,
         ]);
 
-        return (int)$connection->lastInsertId();
+        return (int) $connection->lastInsertId();
     }
 
     public function updateLastUsed(int $uid, string $ip): void

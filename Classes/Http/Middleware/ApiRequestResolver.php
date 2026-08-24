@@ -63,7 +63,7 @@ final class ApiRequestResolver implements MiddlewareInterface
             /** @var JsonResponse $response */
             $response = ApiResponseFactory::error('rate_limited', 'Too many requests.', 429);
 
-            return $response->withHeader('Retry-After', (string)$exception->getRetryAfterSeconds());
+            return $response->withHeader('Retry-After', (string) $exception->getRetryAfterSeconds());
         } catch (InvalidTokenException $exception) {
             return ApiResponseFactory::error('invalid_token', $exception->getMessage(), 401);
         } catch (PhotoNotFoundException|CollectionNotFoundException $exception) {
@@ -89,21 +89,21 @@ final class ApiRequestResolver implements MiddlewareInterface
     private function matchRoute(string $method, string $path): ?\Closure
     {
         $routes = [
-            ['GET', '#^/ping$#', fn (ServerRequestInterface $r, $token) => $this->pingController->ping($token)],
+            ['GET', '#^/ping$#', fn(ServerRequestInterface $r, $token) => $this->pingController->ping($token)],
 
-            ['GET', '#^/collections$#', fn (ServerRequestInterface $r, $token) => $this->collectionApiController->list($r)],
-            ['POST', '#^/collections$#', fn (ServerRequestInterface $r, $token) => $this->collectionApiController->create($r)],
-            ['GET', '#^/collections/(?P<id>\d+)$#', fn (ServerRequestInterface $r, $token, array $m) => $this->collectionApiController->show($r, (int)$m['id'])],
-            ['PATCH', '#^/collections/(?P<id>\d+)$#', fn (ServerRequestInterface $r, $token, array $m) => $this->collectionApiController->update($r, (int)$m['id'])],
-            ['DELETE', '#^/collections/(?P<id>\d+)$#', fn (ServerRequestInterface $r, $token, array $m) => $this->collectionApiController->delete($r, (int)$m['id'])],
-            ['GET', '#^/collections/(?P<id>\d+)/photos$#', fn (ServerRequestInterface $r, $token, array $m) => $this->photoApiController->listByCollection($r, (int)$m['id'])],
-            ['POST', '#^/collections/(?P<id>\d+)/photos$#', fn (ServerRequestInterface $r, $token, array $m) => $this->photoApiController->upload($r, (int)$m['id'])],
+            ['GET', '#^/collections$#', fn(ServerRequestInterface $r, $token) => $this->collectionApiController->list($r)],
+            ['POST', '#^/collections$#', fn(ServerRequestInterface $r, $token) => $this->collectionApiController->create($r)],
+            ['GET', '#^/collections/(?P<id>\d+)$#', fn(ServerRequestInterface $r, $token, array $m) => $this->collectionApiController->show($r, (int) $m['id'])],
+            ['PATCH', '#^/collections/(?P<id>\d+)$#', fn(ServerRequestInterface $r, $token, array $m) => $this->collectionApiController->update($r, (int) $m['id'])],
+            ['DELETE', '#^/collections/(?P<id>\d+)$#', fn(ServerRequestInterface $r, $token, array $m) => $this->collectionApiController->delete($r, (int) $m['id'])],
+            ['GET', '#^/collections/(?P<id>\d+)/photos$#', fn(ServerRequestInterface $r, $token, array $m) => $this->photoApiController->listByCollection($r, (int) $m['id'])],
+            ['POST', '#^/collections/(?P<id>\d+)/photos$#', fn(ServerRequestInterface $r, $token, array $m) => $this->photoApiController->upload($r, (int) $m['id'])],
 
-            ['GET', '#^/photos$#', fn (ServerRequestInterface $r, $token) => $this->photoApiController->listUpdated($r)],
-            ['GET', '#^/photos/(?P<id>\d+)$#', fn (ServerRequestInterface $r, $token, array $m) => $this->photoApiController->show($r, (int)$m['id'])],
-            ['PUT', '#^/photos/(?P<id>\d+)$#', fn (ServerRequestInterface $r, $token, array $m) => $this->photoApiController->replace($r, (int)$m['id'])],
-            ['PATCH', '#^/photos/(?P<id>\d+)$#', fn (ServerRequestInterface $r, $token, array $m) => $this->photoApiController->updateMetadata($r, (int)$m['id'])],
-            ['DELETE', '#^/photos/(?P<id>\d+)$#', fn (ServerRequestInterface $r, $token, array $m) => $this->photoApiController->delete($r, (int)$m['id'])],
+            ['GET', '#^/photos$#', fn(ServerRequestInterface $r, $token) => $this->photoApiController->listUpdated($r)],
+            ['GET', '#^/photos/(?P<id>\d+)$#', fn(ServerRequestInterface $r, $token, array $m) => $this->photoApiController->show($r, (int) $m['id'])],
+            ['PUT', '#^/photos/(?P<id>\d+)$#', fn(ServerRequestInterface $r, $token, array $m) => $this->photoApiController->replace($r, (int) $m['id'])],
+            ['PATCH', '#^/photos/(?P<id>\d+)$#', fn(ServerRequestInterface $r, $token, array $m) => $this->photoApiController->updateMetadata($r, (int) $m['id'])],
+            ['DELETE', '#^/photos/(?P<id>\d+)$#', fn(ServerRequestInterface $r, $token, array $m) => $this->photoApiController->delete($r, (int) $m['id'])],
         ];
 
         foreach ($routes as [$routeMethod, $pattern, $handler]) {
@@ -111,7 +111,7 @@ final class ApiRequestResolver implements MiddlewareInterface
                 continue;
             }
             if (preg_match($pattern, $path, $matches) === 1) {
-                return fn (ServerRequestInterface $r, $token) => $handler($r, $token, $matches);
+                return fn(ServerRequestInterface $r, $token) => $handler($r, $token, $matches);
             }
         }
 

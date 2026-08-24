@@ -27,16 +27,16 @@ final class PhotoUploadTest extends AbstractApiTestCase
         self::assertNotEmpty($data['contentHash']);
 
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file');
-        $fileCount = (int)$queryBuilder->count('uid')->from('sys_file')
+        $fileCount = (int) $queryBuilder->count('uid')->from('sys_file')
             ->where($queryBuilder->expr()->eq('name', $queryBuilder->createNamedParameter($collectionId . '_test-photo.jpg')))
             ->executeQuery()->fetchOne();
         self::assertSame(1, $fileCount);
 
         $refQueryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file_reference');
-        $refCount = (int)$refQueryBuilder->count('uid')->from('sys_file_reference')
+        $refCount = (int) $refQueryBuilder->count('uid')->from('sys_file_reference')
             ->where(
                 $refQueryBuilder->expr()->eq('tablenames', $refQueryBuilder->createNamedParameter('tx_lightroompublishservice_domain_model_photo')),
-                $refQueryBuilder->expr()->eq('uid_foreign', $refQueryBuilder->createNamedParameter((int)$data['id'], ParameterType::INTEGER)),
+                $refQueryBuilder->expr()->eq('uid_foreign', $refQueryBuilder->createNamedParameter((int) $data['id'], ParameterType::INTEGER)),
             )
             ->executeQuery()->fetchOne();
         self::assertSame(1, $refCount);
@@ -52,7 +52,7 @@ final class PhotoUploadTest extends AbstractApiTestCase
             ->withParsedBody(['metadata' => json_encode(['title' => 'No file'])]);
 
         $response = $this->executeFrontendSubRequest($request);
-        $body = json_decode((string)$response->getBody(), true);
+        $body = json_decode((string) $response->getBody(), true);
 
         self::assertSame(422, $response->getStatusCode());
         self::assertSame('missing_file', $body['error']['code']);

@@ -32,21 +32,21 @@ final class PhotoDeleteTest extends AbstractApiTestCase
 
         // Photo row must be gone (soft-deleted, invisible via default restrictions).
         $photoQueryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_lightroompublishservice_domain_model_photo');
-        $photoCount = (int)$photoQueryBuilder->count('uid')->from('tx_lightroompublishservice_domain_model_photo')
-            ->where($photoQueryBuilder->expr()->eq('uid', $photoQueryBuilder->createNamedParameter((int)$photo['id'], ParameterType::INTEGER)))
+        $photoCount = (int) $photoQueryBuilder->count('uid')->from('tx_lightroompublishservice_domain_model_photo')
+            ->where($photoQueryBuilder->expr()->eq('uid', $photoQueryBuilder->createNamedParameter((int) $photo['id'], ParameterType::INTEGER)))
             ->executeQuery()->fetchOne();
         self::assertSame(0, $photoCount);
 
         // The sys_file_reference must be gone.
         $refQueryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file_reference');
-        $refCount = (int)$refQueryBuilder->count('uid')->from('sys_file_reference')
-            ->where($refQueryBuilder->expr()->eq('uid_foreign', $refQueryBuilder->createNamedParameter((int)$photo['id'], ParameterType::INTEGER)))
+        $refCount = (int) $refQueryBuilder->count('uid')->from('sys_file_reference')
+            ->where($refQueryBuilder->expr()->eq('uid_foreign', $refQueryBuilder->createNamedParameter((int) $photo['id'], ParameterType::INTEGER)))
             ->executeQuery()->fetchOne();
         self::assertSame(0, $refCount);
 
         // The sys_file row and the physical file itself must both be gone, not just dereferenced.
-        $sysFileCount = (int)$fileQueryBuilder->count('uid')->from('sys_file')
-            ->where($fileQueryBuilder->expr()->eq('uid', $fileQueryBuilder->createNamedParameter((int)$fileRow['uid'], ParameterType::INTEGER)))
+        $sysFileCount = (int) $fileQueryBuilder->count('uid')->from('sys_file')
+            ->where($fileQueryBuilder->expr()->eq('uid', $fileQueryBuilder->createNamedParameter((int) $fileRow['uid'], ParameterType::INTEGER)))
             ->executeQuery()->fetchOne();
         self::assertSame(0, $sysFileCount);
         self::assertFileDoesNotExist($absoluteFilePath);

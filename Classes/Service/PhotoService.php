@@ -21,6 +21,7 @@ final class PhotoService
 
     /**
      * @param array<string, mixed> $metadata
+     *
      * @return array<string, mixed>
      */
     public function upload(int $collectionUid, UploadedFileInterface $uploadedFile, array $metadata): array
@@ -57,7 +58,7 @@ final class PhotoService
     {
         $this->collectionService->assertExists($collectionUid);
 
-        return array_map(fn (Photo $photo) => $this->toApiArray($photo), $this->photoRepository->findByCollection($collectionUid));
+        return array_map(fn(Photo $photo) => $this->toApiArray($photo), $this->photoRepository->findByCollection($collectionUid));
     }
 
     /**
@@ -66,7 +67,7 @@ final class PhotoService
     public function listUpdatedSince(int $timestamp, ?int $collectionUid): array
     {
         return array_map(
-            fn (Photo $photo) => $this->toApiArray($photo),
+            fn(Photo $photo) => $this->toApiArray($photo),
             $this->photoRepository->findUpdatedSince($timestamp, $collectionUid),
         );
     }
@@ -75,6 +76,7 @@ final class PhotoService
      * File-and-metadata replace (full republish), used for PUT /photos/{id}.
      *
      * @param array<string, mixed> $metadata
+     *
      * @return array<string, mixed>
      */
     public function replace(int $photoUid, UploadedFileInterface $uploadedFile, array $metadata): array
@@ -102,6 +104,7 @@ final class PhotoService
 
     /**
      * @param array<string, mixed> $metadata
+     *
      * @return array<string, mixed>
      */
     public function updateMetadata(int $photoUid, array $metadata): array

@@ -53,7 +53,7 @@ final class TokenController extends ActionController
             return $this->redirect('new');
         }
 
-        $backendUserUid = (int)($this->getBackendUser()->user['uid'] ?? 0);
+        $backendUserUid = (int) ($this->getBackendUser()->user['uid'] ?? 0);
         $plaintextToken = $this->tokenService->create($name, $backendUserUid);
         $this->getBackendUser()->setAndSaveSessionData(self::SESSION_KEY, $plaintextToken);
 

@@ -57,7 +57,7 @@ final class PhotoController extends ActionController
             $storageMessage = $exception->getMessage();
         }
 
-        $activeTokenCount = count(array_filter($this->apiTokenRepository->findAll(), static fn ($token) => !$token->revoked));
+        $activeTokenCount = count(array_filter($this->apiTokenRepository->findAll(), static fn($token) => !$token->revoked));
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->assignMultiple([

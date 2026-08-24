@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'frontend' => [
         'rpflamm/lightroom-publish-service/api-resolver' => [

@@ -19,7 +19,7 @@ final class RequestPayload
      */
     public static function jsonBody(ServerRequestInterface $request): array
     {
-        $contents = (string)$request->getBody();
+        $contents = (string) $request->getBody();
         if (trim($contents) === '') {
             return [];
         }
@@ -50,7 +50,7 @@ final class RequestPayload
         }
 
         try {
-            $decoded = json_decode((string)$metadataField, true, 512, JSON_THROW_ON_ERROR);
+            $decoded = json_decode((string) $metadataField, true, 512, JSON_THROW_ON_ERROR);
         } catch (\JsonException) {
             throw new ValidationException('"metadata" field is not valid JSON.', 'invalid_json');
         }

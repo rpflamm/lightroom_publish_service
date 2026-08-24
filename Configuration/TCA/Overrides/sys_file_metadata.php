@@ -51,6 +51,6 @@ $GLOBALS['TCA']['sys_file_metadata']['palettes']['lightroomPublishService'] = [
 ExtensionManagementUtility::addToAllTCAtypes(
     'sys_file_metadata',
     '--palette--;;lightroomPublishService',
-    (string)FileType::IMAGE->value,
+    (string) FileType::IMAGE->value,
     'after:--palette--;;30',
 );

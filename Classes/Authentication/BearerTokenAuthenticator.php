@@ -61,8 +61,8 @@ final class BearerTokenAuthenticator
      */
     private function assertNotRateLimited(string $remoteIp): void
     {
-        $limit = (int)($this->extensionConfiguration->get('lightroom_publish_service', 'rateLimitRequests') ?? 30);
-        $interval = (string)($this->extensionConfiguration->get('lightroom_publish_service', 'rateLimitInterval') ?? '5 minutes');
+        $limit = (int) ($this->extensionConfiguration->get('lightroom_publish_service', 'rateLimitRequests') ?? 30);
+        $interval = (string) ($this->extensionConfiguration->get('lightroom_publish_service', 'rateLimitInterval') ?? '5 minutes');
 
         $rateLimit = $this->rateLimiterFactory->createLimiter([
             'id' => 'lightroom_publish_service_auth',
@@ -86,6 +86,6 @@ final class BearerTokenAuthenticator
 
         $serverParams = $request->getServerParams();
 
-        return (string)($serverParams['REMOTE_ADDR'] ?? 'unknown');
+        return (string) ($serverParams['REMOTE_ADDR'] ?? 'unknown');
     }
 }

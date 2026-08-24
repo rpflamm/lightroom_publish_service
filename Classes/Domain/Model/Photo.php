@@ -20,11 +20,11 @@ final class Photo
     public static function fromDatabaseRow(array $row, ?int $fileUid = null): self
     {
         return new self(
-            uid: (int)$row['uid'],
-            collection: (int)$row['collection'],
+            uid: (int) $row['uid'],
+            collection: (int) $row['collection'],
             fileUid: $fileUid,
-            contentHash: (string)($row['content_hash'] ?? ''),
-            tstamp: (int)($row['tstamp'] ?? 0),
+            contentHash: (string) ($row['content_hash'] ?? ''),
+            tstamp: (int) ($row['tstamp'] ?? 0),
         );
     }
 }

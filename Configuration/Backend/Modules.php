@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use RPflamm\LightroomPublishService\Controller\Backend\CollectionController;
 use RPflamm\LightroomPublishService\Controller\Backend\PhotoController;
 use RPflamm\LightroomPublishService\Controller\Backend\TokenController;

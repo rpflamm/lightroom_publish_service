@@ -62,7 +62,7 @@ abstract class AbstractApiTestCase extends FunctionalTestCase
         );
         self::assertSame(201, $response->getStatusCode());
 
-        return json_decode((string)$response->getBody(), true)['data']['id'];
+        return json_decode((string) $response->getBody(), true)['data']['id'];
     }
 
     /**
@@ -78,6 +78,6 @@ abstract class AbstractApiTestCase extends FunctionalTestCase
         $response = $this->executeFrontendSubRequest($request);
         self::assertSame(201, $response->getStatusCode());
 
-        return json_decode((string)$response->getBody(), true)['data'];
+        return json_decode((string) $response->getBody(), true)['data'];
     }
 }

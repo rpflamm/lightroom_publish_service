@@ -21,12 +21,12 @@ final class Collection
     public static function fromDatabaseRow(array $row): self
     {
         return new self(
-            uid: (int)$row['uid'],
-            name: (string)$row['name'],
-            collectionType: (string)$row['collection_type'],
-            parent: (int)($row['parent'] ?? 0) > 0 ? (int)$row['parent'] : null,
-            description: (string)($row['description'] ?? ''),
-            sorting: (int)($row['sorting'] ?? 0),
+            uid: (int) $row['uid'],
+            name: (string) $row['name'],
+            collectionType: (string) $row['collection_type'],
+            parent: (int) ($row['parent'] ?? 0) > 0 ? (int) $row['parent'] : null,
+            description: (string) ($row['description'] ?? ''),
+            sorting: (int) ($row['sorting'] ?? 0),
         );
     }
 

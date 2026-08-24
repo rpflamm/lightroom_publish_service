@@ -44,7 +44,7 @@ final class PhotoRepository
             ->fetchAllAssociative();
 
         return array_map(
-            fn (array $row) => Photo::fromDatabaseRow($row, $this->resolveFileUid((int)$row['uid'])),
+            fn(array $row) => Photo::fromDatabaseRow($row, $this->resolveFileUid((int) $row['uid'])),
             $rows,
         );
     }
@@ -70,7 +70,7 @@ final class PhotoRepository
         $rows = $queryBuilder->executeQuery()->fetchAllAssociative();
 
         return array_map(
-            fn (array $row) => Photo::fromDatabaseRow($row, $this->resolveFileUid((int)$row['uid'])),
+            fn(array $row) => Photo::fromDatabaseRow($row, $this->resolveFileUid((int) $row['uid'])),
             $rows,
         );
     }
@@ -89,7 +89,7 @@ final class PhotoRepository
             ->executeQuery()
             ->fetchOne();
 
-        return $fileUid !== false ? (int)$fileUid : null;
+        return $fileUid !== false ? (int) $fileUid : null;
     }
 
     /**
@@ -105,7 +105,7 @@ final class PhotoRepository
             'crdate' => $now,
         ]));
 
-        return (int)$connection->lastInsertId();
+        return (int) $connection->lastInsertId();
     }
 
     /**

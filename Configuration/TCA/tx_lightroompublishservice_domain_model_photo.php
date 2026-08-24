@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:lightroom_publish_service/Resources/Private/Language/locallang_db.xlf:tx_lightroompublishservice_domain_model_photo',
