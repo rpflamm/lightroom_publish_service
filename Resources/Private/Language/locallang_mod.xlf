@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages">
+    <header/>
+    <body>
+      <trans-unit id="group.title">
+        <source>Lightroom Publish Service</source>
+      </trans-unit>
+      <trans-unit id="group.description">
+        <source>Manage collections, photos and API tokens published from Adobe Lightroom Classic.</source>
+      </trans-unit>
+      <trans-unit id="group.shortDescription">
+        <source>Lightroom</source>
+      </trans-unit>
+      <trans-unit id="collection.title">
+        <source>Collection</source>
+      </trans-unit>
+      <trans-unit id="collection.description">
+        <source>Browse collections and photos published from Adobe Lightroom Classic.</source>
+      </trans-unit>
+      <trans-unit id="collection.shortDescription">
+        <source>Collection</source>
+      </trans-unit>
+      <trans-unit id="api.title">
+        <source>API</source>
+      </trans-unit>
+      <trans-unit id="api.description">
+        <source>Manage API tokens used by the Lightroom Classic plugin to authenticate.</source>
+      </trans-unit>
+      <trans-unit id="api.shortDescription">
+        <source>API</source>
+      </trans-unit>
+      <trans-unit id="testConnection.title">
+        <source>Test Connection</source>
+      </trans-unit>
+      <trans-unit id="testConnection.description">
+        <source>Verify the dedicated FAL storage and API token configuration.</source>
+      </trans-unit>
+      <trans-unit id="testConnection.shortDescription">
+        <source>Test Connection</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

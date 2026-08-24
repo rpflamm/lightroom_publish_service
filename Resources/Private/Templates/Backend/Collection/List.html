@@ -1,0 +1,47 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Module"/>
+<f:section name="Content">
+    <h1>Collections</h1>
+
+    <f:if condition="{collections}">
+        <f:then>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Parent</th>
+                        <th>Photos</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{collections}" as="collection">
+                        <tr>
+                            <td>
+                                <f:link.action controller="Backend\Photo" action="list" arguments="{collection: collection.uid}">
+                                    {collection.name}
+                                </f:link.action>
+                            </td>
+                            <td>{collection.collectionType}</td>
+                            <td>{collection.parent}</td>
+                            <td>{photoCounts.{collection.uid}}</td>
+                            <td>
+                                <f:link.action controller="Backend\Photo" action="list" arguments="{collection: collection.uid}" class="btn btn-default btn-sm">
+                                    View photos
+                                </f:link.action>
+                            </td>
+                        </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </f:then>
+        <f:else>
+            <f:be.infobox state="-1" title="No collections yet">
+                <p>Collections are created automatically by the Lightroom Classic plugin when a photo is first published.</p>
+            </f:be.infobox>
+        </f:else>
+    </f:if>
+
+</f:section>
+</html>

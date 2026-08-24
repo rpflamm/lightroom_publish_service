@@ -1,0 +1,71 @@
+{
+    "name": "rpflamm/lightroom-publish-service",
+    "type": "typo3-cms-extension",
+    "description": "Publish Adobe Lightroom Classic photos into TYPO3 FAL via a token-authenticated JSON API, including the companion Lightroom Classic Publish Service plugin.",
+    "license": [
+        "GPL-2.0-or-later"
+    ],
+    "keywords": [
+        "typo3",
+        "lightroom",
+        "publish-service",
+        "fal"
+    ],
+    "authors": [
+        {
+            "name": "RPflamm"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "typo3/cms-core": "^13.4 || ^14.3",
+        "typo3/cms-backend": "^13.4 || ^14.3",
+        "typo3/cms-extbase": "^13.4 || ^14.3",
+        "typo3/cms-filemetadata": "^13.4 || ^14.3",
+        "typo3/cms-fluid": "^13.4 || ^14.3"
+    },
+    "require-dev": {
+        "typo3/testing-framework": "^9.1 || ^10.0",
+        "phpunit/phpunit": "^11.5 || ^12.0",
+        "typo3/cms-fluid-styled-content": "^13.4 || ^14.3",
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "saschaegerer/phpstan-typo3": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "RPflamm\\LightroomPublishService\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RPflamm\\LightroomPublishService\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "lightroom_publish_service"
+        },
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "ci:php:lint": "find Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n1 -P4 php -l",
+        "ci:php:cgl": "php-cs-fixer fix --diff --dry-run",
+        "ci:php:cgl:fix": "php-cs-fixer fix",
+        "ci:php:phpstan": "phpstan analyse --configuration=phpstan.neon"
+    }
+}

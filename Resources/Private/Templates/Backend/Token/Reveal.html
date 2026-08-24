@@ -1,0 +1,27 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Module"/>
+<f:section name="Content">
+    <h1>API token created</h1>
+
+    <f:if condition="{plaintextToken}">
+        <f:then>
+            <f:be.infobox state="2" title="Copy this token now">
+                <p>
+                    This is the only time the full token is shown. Paste it into the Lightroom Classic
+                    plugin's Plugin Manager settings now &mdash; it cannot be retrieved again afterwards
+                    (you would need to revoke it and create a new one).
+                </p>
+            </f:be.infobox>
+            <pre style="user-select:all; padding:1em; background:#f5f5f5; border:1px solid #ddd;">{plaintextToken}</pre>
+        </f:then>
+        <f:else>
+            <f:be.infobox state="2" title="Token already retrieved">
+                <p>This token's plaintext value was already shown once and cannot be displayed again. Revoke it and create a new one if it was lost.</p>
+            </f:be.infobox>
+        </f:else>
+    </f:if>
+
+    <p><f:link.action controller="Backend\Token" action="list" class="btn btn-default btn-sm">&larr; Back to token list</f:link.action></p>
+
+</f:section>
+</html>

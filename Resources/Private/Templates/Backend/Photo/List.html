@@ -1,0 +1,58 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Module"/>
+<f:section name="Content">
+    <h1>Photos in "{collection.name}"</h1>
+    <p><f:link.action controller="Backend\Collection" action="list" class="btn btn-default btn-sm">&larr; Back to collections</f:link.action></p>
+
+    <f:if condition="{photos}">
+        <f:then>
+            <div class="row">
+                <f:for each="{photos}" as="photo">
+                    <div class="col-sm-3" style="margin-bottom: 1.5em;">
+                        <div class="card" style="border: 3px solid {f:if(condition: photo.colorLabel, then: photo.colorLabel, else: '#ddd')};">
+                            <f:if condition="{photo.url}">
+                                <div class="card-image border-bottom">
+                                    <img src="{photo.url}" class="card-img-top" alt="{photo.title}" style="max-height:224px; object-fit:contain; " />
+                                </div>
+                            </f:if>
+
+                            <f:if condition="{photo.title} || {photo.caption}">
+                                <div class="card-header">
+                                    <div class="card-header-body">
+                                        <f:if condition="{photo.title}"><h2 class="card-title">{photo.title}</h2></f:if>
+                                        <f:if condition="{photo.caption}"><span class="card-subtitle">{photo.caption}</span></f:if>
+                                    </div>
+                                </div>
+                            </f:if>
+
+                            <div class="card-body">
+                                <small>
+                                    <f:if condition="{photo.rating} >= 1"><f:then>&#9733;</f:then><f:else>&#9734;</f:else></f:if>
+                                    <f:if condition="{photo.rating} >= 2"><f:then>&#9733;</f:then><f:else>&#9734;</f:else></f:if>
+                                    <f:if condition="{photo.rating} >= 3"><f:then>&#9733;</f:then><f:else>&#9734;</f:else></f:if>
+                                    <f:if condition="{photo.rating} >= 4"><f:then>&#9733;</f:then><f:else>&#9734;</f:else></f:if>
+                                    <f:if condition="{photo.rating} >= 5"><f:then>&#9733;</f:then><f:else>&#9734;</f:else></f:if>
+                                </small><br/>
+                                <small>{photo.creator}</small>
+                                <f:if condition="{photo.metadataUid}">
+                                    <p style="margin-top:0.5em; margin-bottom:0;">
+                                        <a href="{be:uri.editRecord(table: 'sys_file_metadata', uid: photo.metadataUid)}" class="btn btn-default btn-sm">
+                                            Edit metadata
+                                        </a>
+                                    </p>
+                                </f:if>
+                            </div>
+                        </div>
+                    </div>
+                </f:for>
+            </div>
+        </f:then>
+        <f:else>
+            <f:be.infobox state="-1" title="No photos yet">
+                <p>No photos have been published into this collection yet.</p>
+            </f:be.infobox>
+        </f:else>
+    </f:if>
+
+</f:section>
+</html>

@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  RPflamm\LightroomPublishService\:
+    resource: '../Classes/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
+      - '../Classes/Exception/*'
+
+  RPflamm\LightroomPublishService\Updates\CreateLightroomStorageUpdate:
+    tags:
+      - name: install.upgradewizard
+        identifier: 'lightroomPublishServiceCreateStorage'

@@ -1,0 +1,11 @@
+# cat=basic; type=int+; label=FAL storage UID: UID of the dedicated "Lightroom Publish Service" file storage. Auto-populated on first use; only override if you manually created the storage yourself.
+storageUid = 0
+
+# cat=basic; type=int+; label=Max upload size (MB): Maximum accepted photo upload size in megabytes.
+maxUploadSizeMb = 100
+
+# cat=basic; type=int+; label=Rate limit (requests): Maximum number of API requests allowed per rate-limit window and IP address.
+rateLimitRequests = 30
+
+# cat=basic; type=string; label=Rate limit window: Rate-limit window, e.g. "5 minutes" (passed to Symfony RateLimiter).
+rateLimitInterval = 5 minutes

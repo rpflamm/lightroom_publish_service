@@ -1,0 +1,61 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Module"/>
+<f:section name="Content">
+    <h1>API tokens</h1>
+    <p>
+        <f:link.action controller="Backend\Token" action="new" class="btn btn-primary">Create new token</f:link.action>
+    </p>
+
+    <f:if condition="{tokens}">
+        <f:then>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Last used</th>
+                        <th>Last used IP</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{tokens}" as="token">
+                        <tr>
+                            <td>{token.name}</td>
+                            <td><f:format.date format="Y-m-d H:i">@{token.crdate}</f:format.date></td>
+                            <td>
+                                <f:if condition="{token.lastUsedAt}">
+                                    <f:then><f:format.date format="Y-m-d H:i">@{token.lastUsedAt}</f:format.date></f:then>
+                                    <f:else>never</f:else>
+                                </f:if>
+                            </td>
+                            <td>{token.lastUsedIp}</td>
+                            <td>
+                                <f:if condition="{token.revoked}">
+                                    <f:then><span class="label label-danger">Revoked</span></f:then>
+                                    <f:else><span class="label label-success">Active</span></f:else>
+                                </f:if>
+                            </td>
+                            <td>
+                                <f:if condition="!{token.revoked}">
+                                    <f:form action="revoke" controller="Backend\Token" method="post">
+                                        <f:form.hidden name="tokenUid" value="{token.uid}"/>
+                                        <f:form.submit value="Revoke" class="btn btn-sm btn-danger"/>
+                                    </f:form>
+                                </f:if>
+                            </td>
+                        </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </f:then>
+        <f:else>
+            <f:be.infobox state="-1" title="No API tokens yet">
+                <p>Create a token here, then paste it into the Lightroom Classic plugin's Plugin Manager settings.</p>
+            </f:be.infobox>
+        </f:else>
+    </f:if>
+
+</f:section>
+</html>
