@@ -54,5 +54,17 @@ The server URL and API token are shared by all Publish Service connections creat
   ```
   curl -H "Authorization: Bearer <your-token>" https://your-site.example.com/lightroom-publish-service/api/v1/ping
   ```
+- **"Connection failed: Missing Authorization header."**: the plugin does send the `Authorization: Bearer <token>` header, but the web server strips it before it reaches PHP. This is common on shared hosting and Plesk. Fix it on the server:
+  - **nginx + PHP-FPM** (in Plesk: *Domains → your domain → Apache & nginx Settings → Additional nginx directives*):
+    ```nginx
+    fastcgi_param HTTP_AUTHORIZATION $http_authorization;
+    ```
+  - **Apache** (in `.htaccess` in the web root, or in Plesk under *Additional Apache directives*):
+    ```apache
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    ```
+  After the change, the `curl` test above should answer with a token error (or success) instead of "Missing Authorization header." Also make sure the server URL does not redirect (e.g. `http` → `https` or non-`www` → `www`), since Lightroom does not resend the header on redirects.
 - **A token stopped working**: it may have been revoked in the TYPO3 backend module. Create a new one and update the Plugin Manager settings.
 - **Photos fail to upload**: check the file format/color space restrictions above, and check the TYPO3 backend module's Connection Test page for storage/configuration problems.
