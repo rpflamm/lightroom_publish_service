@@ -8,9 +8,9 @@ use RPflamm\LightroomPublishService\Service\StorageProvisioningService;
 
 /**
  * Shared implementation for {@see CreateLightroomStorageUpdate}, which implements
- * whichever of the two version-specific UpgradeWizardInterface variants is available
+ * the UpgradeWizardInterface variant matching the running TYPO3 version
  * (TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface in v14+, TYPO3\CMS\Install\Updates\UpgradeWizardInterface
- * in v13 -- the v13 interface was removed without a compatible alias in v14.3).
+ * in v13 -- the latter is deprecated since v14.0 and will be removed in v15.0).
  */
 trait CreateLightroomStorageUpdateTrait
 {

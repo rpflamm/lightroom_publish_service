@@ -1,11 +1,11 @@
 <?php
 
 /**
- * PHPStan-only stub. TYPO3 v14 introduced TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface,
- * replacing the removed TYPO3\CMS\Install\Updates\UpgradeWizardInterface from v13. Composer
- * only ever installs one of the two version-specific interfaces at a time. This stub lets
- * PHPStan resolve the symbol regardless of which major version is actually installed locally;
- * it is never loaded at runtime (see phpstan.neon "stubFiles").
+ * PHPStan-only stub. TYPO3 v14 introduced TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface as the
+ * successor of TYPO3\CMS\Install\Updates\UpgradeWizardInterface (deprecated since v14.0, removed
+ * in v15.0). The new interface does not exist in v13. This stub lets PHPStan resolve the symbol
+ * regardless of which major version is actually installed locally; it is never loaded at runtime
+ * (see phpstan.neon "scanFiles").
  */
 
 namespace TYPO3\CMS\Core\Upgrades;
